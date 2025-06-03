@@ -1,23 +1,24 @@
 package com.example.recruitment_task;
 
 import com.example.recruitment_task.entities.City;
-import com.example.recruitment_task.services.CitiesService;
+import com.example.recruitment_task.services.CitiesDAO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-public class CitiesServiceTest {
+public class CitiesDAOTest {
     @Autowired
-    private CitiesService citiesService;
+    private CitiesDAO dao;
 
     @Test
     void shouldLoadCitiesFromJson() {
-        List<City> cities = citiesService.getCities();
+        List<City> cities = dao.getCities();
         assertNotNull(cities);
         assertFalse(cities.isEmpty());
 
