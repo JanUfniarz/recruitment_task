@@ -20,8 +20,7 @@ public class CitiesService {
         String lowerQuery = query.toLowerCase();
 
         return dao.getCities().stream()
-                .filter(city -> city.name().toLowerCase().contains(lowerQuery)
-                        || city.state().toLowerCase().contains(lowerQuery))
+                .filter(city -> city.name().toLowerCase().contains(lowerQuery))
                 .collect(Collectors.toList());
     }
 }

@@ -5,6 +5,6 @@ public record City(
         String state
 ) {
     public String getFullName() {
-        return name + "_" + state;
+        return name.replace(" ", "_") + "_" + state.replace(" ", "_");
     }
 }
