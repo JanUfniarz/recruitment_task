@@ -17,7 +17,7 @@ spring init `
 
 Set-Location $dirName
 
-$controllersPath = "src/main/kotlin/com/example/$dirName/controllers"
+$controllersPath = "src/main/java/com/example/$dirName/controllers"
 
 mkdir $controllersPath
 
