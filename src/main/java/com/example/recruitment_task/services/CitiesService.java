@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class CitiesService {
-    private CitiesDAO dao;
+    private final CitiesDAO dao;
 
     @Autowired
     public CitiesService(CitiesDAO citiesDAO) {
@@ -18,14 +18,18 @@ public class CitiesService {
     }
 
     public List<City> findByQuery(String query) {
-        String lowerQuery = query.toLowerCase();
-
         return dao.getCities().stream()
-                .filter(city -> city.name().toLowerCase().contains(lowerQuery))
+                .filter(city -> city
+                        .name()
+                        .toLowerCase()
+                        .contains(query.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
     public City getByFullName(String fullName) {
-
+        return dao.getCities().stream()
+                .filter(city -> city.getFullName().equals(fullName))
+                .findFirst()
+                .orElseThrow();
     }
 }

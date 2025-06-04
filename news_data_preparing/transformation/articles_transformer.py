@@ -7,9 +7,15 @@ from openai_guesser import OpenAiGuesser
 def normalize(text):
     return text.strip().replace("-", " ").lower()
 
+counter: int = 0
+
 def resolve_city_state(article: dict[str, str | int], guesser: OpenAiGuesser) -> dict[str, str]:
+    global counter
+    counter += 1
+    print(f"article:{counter}")
     if article['type'] == 'across-america':
         return dict(
+            id = counter,
             url=article["url"],
             title=article["title"],
             date=article["date"],
@@ -40,6 +46,7 @@ def resolve_city_state(article: dict[str, str | int], guesser: OpenAiGuesser) ->
     matched_state, matched_city = guesser(matched_state, matched_city, article['url'])
 
     return dict(
+        id = counter,
         url=article["url"],
         title=article["title"],
         date=article["date"],
@@ -59,5 +66,5 @@ if __name__ == '__main__':
     openai_guesser = OpenAiGuesser(city_state_map)
     transformed = [resolve_city_state(article, openai_guesser) for article in articles]
 
-    with open("../data/transformed_articles.json", "w", encoding="utf-8") as f:
+    with open("../data/transformed_articles_v2.json", "w", encoding="utf-8") as f:
         json.dump(transformed, f, ensure_ascii=False, indent=2)

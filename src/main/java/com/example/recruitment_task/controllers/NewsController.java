@@ -2,6 +2,7 @@ package com.example.recruitment_task.controllers;
 
 import com.example.recruitment_task.entities.Article;
 import com.example.recruitment_task.entities.City;
+import com.example.recruitment_task.entities.NewsResponse;
 import com.example.recruitment_task.services.CitiesService;
 import com.example.recruitment_task.services.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,9 @@ public class NewsController {
         this.newsService = newsService;
     }
 
+    @SuppressWarnings("unused")
     @GetMapping
-    public List<Article> getNews(
+    public NewsResponse getNews(
             @RequestParam("city") String fullName
     ) {
         City city = citiesService.getByFullName(fullName);
