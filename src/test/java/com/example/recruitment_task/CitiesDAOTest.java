@@ -1,7 +1,7 @@
 package com.example.recruitment_task;
 
 import com.example.recruitment_task.entities.City;
-import com.example.recruitment_task.services.CitiesDAO;
+import com.example.recruitment_task.daos.CitiesDAO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

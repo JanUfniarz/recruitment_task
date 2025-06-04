@@ -1,4 +1,4 @@
-package com.example.recruitment_task.services;
+package com.example.recruitment_task.daos;
 
 import com.example.recruitment_task.entities.City;
 import com.fasterxml.jackson.databind.JsonNode;

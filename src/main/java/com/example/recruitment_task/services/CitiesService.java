@@ -1,5 +1,6 @@
 package com.example.recruitment_task.services;
 
+import com.example.recruitment_task.daos.CitiesDAO;
 import com.example.recruitment_task.entities.City;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,9 @@ public class CitiesService {
         return dao.getCities().stream()
                 .filter(city -> city.name().toLowerCase().contains(lowerQuery))
                 .collect(Collectors.toList());
+    }
+
+    public City getByFullName(String fullName) {
+
     }
 }
