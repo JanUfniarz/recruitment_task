@@ -1,14 +1,17 @@
 import React, { useState, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 type City = {
     name: string;
     state: string;
+    fullName: string;
 };
 
 const CitySearchBar: React.FC = () => {
     const [query, setQuery] = useState<string>('');
     const [results, setResults] = useState<City[]>([]);
-
+    const navigate = useNavigate();
     const handleInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setQuery(value);
@@ -26,6 +29,10 @@ const CitySearchBar: React.FC = () => {
         } else {
             setResults([]);
         }
+    };
+
+    const handleClick = (city: City) => {
+        navigate(`/city/${encodeURIComponent(city.fullName)}`);
     };
 
     return (
@@ -58,6 +65,7 @@ const CitySearchBar: React.FC = () => {
                     {results.map((city, index) => (
                         <li
                             key={index}
+                            onClick={() => handleClick(city)}
                             style={{
                                 padding: '8px',
                                 borderBottom: '1px solid #eee',
