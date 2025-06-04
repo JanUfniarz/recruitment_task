@@ -34,3 +34,4 @@ build/
 /src/main/resources/data/us-cities-demographics.json
 /src/main/resources/data/us_states_and_cities.json
 /src/main/resources/static/
+/news_data_preparing/data/
