@@ -7,6 +7,7 @@ import com.example.recruitment_task.entities.NewsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,6 +19,10 @@ public class NewsService {
     @Autowired
     public NewsService(NewsDAO dao) {
         this.dao = dao;
+    }
+
+    private List<Article> sorted(List<Article> articles) {
+        return articles.stream().sorted(Comparator.comparing(Article::date)).toList();
     }
 
     public NewsResponse getLocalNews(City city) {
@@ -32,9 +37,9 @@ public class NewsService {
                 ));
 
         return new NewsResponse(
-                partitioned.get(true),
-                partitioned.get(false),
-                global
+                sorted(partitioned.get(true)),
+                sorted(partitioned.get(false)),
+                sorted(global)
         );
     }
 }
