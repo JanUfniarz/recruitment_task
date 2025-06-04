@@ -22,18 +22,18 @@ public class NewsService {
     }
 
     private List<Article> sorted(List<Article> articles) {
-        return articles.stream().sorted(Comparator.comparing(Article::date)).toList();
+        return articles.stream().sorted(Comparator.comparing(Article::getDate)).toList();
     }
 
     public NewsResponse getLocalNews(City city) {
         List<Article> global = dao.getArticles().stream()
-                .filter(article -> article.city().equals("GLOBAL"))
+                .filter(article -> article.getCity().equals("GLOBAL"))
                 .toList();
 
         Map<Boolean, List<Article>> partitioned = dao.getArticles().stream()
-                .filter(article -> article.state().equals(city.state()))
+                .filter(article -> article.getState().equals(city.state()))
                 .collect(Collectors.partitioningBy(
-                        article -> article.city().equals(city.name())
+                        article -> article.getCity().equals(city.name())
                 ));
 
         return new NewsResponse(
