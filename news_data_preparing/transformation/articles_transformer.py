@@ -1,8 +1,8 @@
 import json
-import os
 from urllib.parse import urlparse
 
 from openai_guesser import OpenAiGuesser
+
 
 def normalize(text):
     return text.strip().replace("-", " ").lower()
@@ -66,5 +66,5 @@ if __name__ == '__main__':
     openai_guesser = OpenAiGuesser(city_state_map)
     transformed = [resolve_city_state(article, openai_guesser) for article in articles]
 
-    with open("../data/transformed_articles_v2.json", "w", encoding="utf-8") as f:
+    with open("../data/transformed_articles_v3.json", "w", encoding="utf-8") as f:
         json.dump(transformed, f, ensure_ascii=False, indent=2)

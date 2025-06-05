@@ -16,8 +16,8 @@ class OpenAiGuesser:
 
     def __call__(self, state: str | None, city: str | None, url: str) -> tuple[str, str]:
 
-        if city and state:
-            return city, state
+        if state and city:
+            return state, city
 
         new_state = state
 
