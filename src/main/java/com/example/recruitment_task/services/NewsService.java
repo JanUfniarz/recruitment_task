@@ -2,6 +2,7 @@ package com.example.recruitment_task.services;
 
 import com.example.recruitment_task.daos.NewsDAO;
 import com.example.recruitment_task.entities.Article;
+import com.example.recruitment_task.entities.ArticleMeta;
 import com.example.recruitment_task.entities.City;
 import com.example.recruitment_task.entities.NewsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +22,21 @@ public class NewsService {
         this.dao = dao;
     }
 
-    private List<Article> sorted(List<Article> articles) {
-        return articles.stream().sorted(Comparator.comparing(Article::getDate)).toList();
+    private List<ArticleMeta> sorted(List<ArticleMeta> articles) {
+        return articles.stream().sorted(Comparator.comparing(ArticleMeta::date)).toList();
     }
 
     public NewsResponse getLocalNews(City city) {
-        List<Article> global = dao.getArticles().stream()
-                .filter(article -> article.getCity().equals("GLOBAL"))
+        List<ArticleMeta> global = dao.getArticles().stream()
+                .filter(article -> article.city().equals("GLOBAL"))
+                .map(Article::toMeta)
                 .toList();
 
-        Map<Boolean, List<Article>> partitioned = dao.getArticles().stream()
-                .filter(article -> article.getState().equals(city.state()))
+        Map<Boolean, List<ArticleMeta>> partitioned = dao.getArticles().stream()
+                .filter(article -> article.state().equals(city.state()))
+                .map(Article::toMeta)
                 .collect(Collectors.partitioningBy(
-                        article -> article.getCity().equals(city.name())
+                        article -> article.city().equals(city.name())
                 ));
 
         return new NewsResponse(
@@ -41,5 +44,12 @@ public class NewsService {
                 sorted(partitioned.get(false)),
                 sorted(global)
         );
+    }
+
+    public Article getById(int id) {
+        return dao.getArticles().stream()
+                .filter(article -> article.id() == id)
+                .findFirst()
+                .orElseThrow();
     }
 }

@@ -6,13 +6,9 @@ import com.example.recruitment_task.entities.NewsResponse;
 import com.example.recruitment_task.services.CitiesService;
 import com.example.recruitment_task.services.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping("api/news")
 public class NewsController {
@@ -28,12 +24,18 @@ public class NewsController {
         this.newsService = newsService;
     }
 
-    @SuppressWarnings("unused")
     @GetMapping
     public NewsResponse getNews(
             @RequestParam("city") String fullName
     ) {
         City city = citiesService.getByFullName(fullName);
         return newsService.getLocalNews(city);
+    }
+
+    @GetMapping(path = "{id}")
+    public Article getFullArticle(
+            @PathVariable("id") int id
+    ) {
+        return newsService.getById(id);
     }
 }

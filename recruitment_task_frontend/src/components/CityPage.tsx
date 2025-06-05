@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 
 type Article = {
     id: number;
@@ -50,11 +50,16 @@ const CityPage: React.FC = () => {
             <h2>{title}</h2>
             {list.length > 0 ? (
                 <ul style={{ listStyle: "none", padding: 0 }}>
-                    {list.map(({ url, title, date, city, state }, index) => (
+                    {list.map(({ id, title, date, city, state }, index) => (
                         <li key={index} style={{ borderBottom: "1px solid #ccc", marginBottom: "1rem", paddingBottom: "1rem" }}>
-                            <a href={url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#0077cc", textDecoration: "none" }}>
+                            <Link to={`/article/${id}`} style={{
+                                fontSize: "1.2rem",
+                                fontWeight: "bold",
+                                color: "#cc0000",
+                                textDecoration: "none"
+                            }}>
                                 {title}
-                            </a>
+                            </Link>
                             <div style={{ fontSize: "0.9rem", color: "#555", marginTop: "0.3rem" }}>
                                 <span>{new Date(date).toLocaleDateString()}</span> | <span>{city}, {state}</span>
                             </div>
@@ -69,7 +74,7 @@ const CityPage: React.FC = () => {
 
     return (
         <div style={{ padding: '20px' }}>
-            <h1 style={{ textAlign: 'center' }}>Miasto: {fullName}</h1>
+            <h1 style={{ textAlign: 'center' }}>Miasto: {fullName?.replace(/_/g, " ")}</h1>
             <div style={{ maxWidth: "800px", margin: "auto", padding: "1rem" }}>
                 <h1>Artykuły</h1>
                 {renderArticles('Lokalne', articles.local)}
